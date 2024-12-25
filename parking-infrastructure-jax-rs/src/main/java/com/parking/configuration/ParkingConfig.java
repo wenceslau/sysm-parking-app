@@ -8,7 +8,7 @@ import jakarta.enterprise.inject.Produces;
 import jakarta.inject.Inject;
 
 @ApplicationScoped
-public class ParkingProduced {
+public class ParkingConfig {
 
     @Inject
     private ParkingGateway parkingGateway;

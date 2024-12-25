@@ -10,10 +10,14 @@ import java.sql.Statement;
 
 @ApplicationPath("/")
 public class ApplicationConfig extends Application {
+
     // Configuração base da API REST
     static {
         System.out.println("ApplicationConfig carregado com sucesso!");
+        initializerDatabase();
+    }
 
+    private static void initializerDatabase() {
         try {
             var connection = ConnectionDB.getInstance();
             var sql = """

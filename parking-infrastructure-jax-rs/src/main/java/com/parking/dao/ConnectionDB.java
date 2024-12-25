@@ -1,9 +1,15 @@
 package com.parking.dao;
 
+import com.parking.configuration.PropertiesConfig;
+import jakarta.enterprise.context.ApplicationScoped;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import static com.parking.configuration.PropertiesConfig.getProperty;
+
+@ApplicationScoped
 public class ConnectionDB {
 
     private static Connection instance;
@@ -24,9 +30,9 @@ public class ConnectionDB {
         }
 
         //Get data connection from application.properties
-        var url = "jdbc:h2:file:d:/tmp/data/parking";
-        var user = "sa";
-        var password = "";
+        var url = getProperty("app.database.url");
+        var user = getProperty("app.database.user");
+        var password = getProperty("app.database.password");
 
         instance = DriverManager.getConnection(url, user, password);
         return instance;
