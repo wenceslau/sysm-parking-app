@@ -1,6 +1,7 @@
 package com.parking.resources;
 
 import com.parking.application.ParkingApp;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -8,6 +9,7 @@ import jakarta.ws.rs.core.Response;
 
 import static com.parking.resources.dto.Builder.*;
 
+@ApplicationScoped
 @Path("/parking")
 public class ParkingResource {
 
@@ -29,7 +31,7 @@ public class ParkingResource {
     }
 
     @POST
-    @Path("/open/{licensePlate}/{vehicleType}")
+    @Path("/register/{licensePlate}/{vehicleType}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response register(@PathParam("licensePlate") String licensePlate, @PathParam("vehicleType") String vehicleType) {
 

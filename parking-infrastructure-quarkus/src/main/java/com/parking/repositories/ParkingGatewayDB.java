@@ -8,6 +8,7 @@ import com.parking.repositories.entities.RegistrationEntity;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -26,8 +27,13 @@ public class ParkingGatewayDB implements ParkingGateway {
     }
 
     @Override
+    @Transactional
     public void save(Registration registration) {
-        parkingRepository.persist(toEntity(registration));
+        var entity = toEntity(registration);
+        if (registration.getCheckOut() != null) {
+            entity = parkingRepository.getEntityManager().merge(entity);
+        }
+        parkingRepository.persist(entity);
     }
 
     @Override

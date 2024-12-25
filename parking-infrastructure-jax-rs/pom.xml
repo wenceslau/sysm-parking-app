@@ -9,12 +9,6 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
-    <parent>
-        <groupId>com.parking</groupId>
-        <artifactId>teacher-web-parking</artifactId>
-        <version>1.0-SNAPSHOT</version>
-    </parent>
-
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
@@ -47,7 +41,7 @@
     </dependencies>
 
     <build>
-        <finalName>web-jaxrs</finalName>
+        <finalName>web</finalName>
         <plugins>
             <plugin>
                 <groupId>org.wildfly.plugins</groupId>

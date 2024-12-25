@@ -12,8 +12,6 @@
     <modules>
         <module>parking-domain</module>
         <module>parking-application</module>
-        <module>parking-infrastructure-jax-rs</module>
-        <module>parking-infrastructure-quarkus</module>
     </modules>
 
     <properties>
