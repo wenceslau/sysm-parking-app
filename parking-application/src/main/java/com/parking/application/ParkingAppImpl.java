@@ -1,6 +1,6 @@
 package com.parking.application;
 
-import com.parking.*;
+import com.parking.domain.*;
 
 import java.util.List;
 
