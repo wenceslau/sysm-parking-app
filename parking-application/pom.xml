@@ -8,7 +8,7 @@
 
     <parent>
         <groupId>com.parking</groupId>
-        <artifactId>teacher-web-parking</artifactId>
+        <artifactId>teacher-parking-lot</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
