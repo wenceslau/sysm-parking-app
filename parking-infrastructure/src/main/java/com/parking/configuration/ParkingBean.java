@@ -2,6 +2,7 @@ package com.parking.configuration;
 
 import com.parking.ParkingGateway;
 import com.parking.application.ParkingApp;
+import com.parking.application.ParkingAppImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -16,7 +17,7 @@ public class ParkingBean {
 
     @Bean
     public ParkingApp parkingApp() {
-        return new ParkingApp(parkingGateway);
+        return new ParkingAppImpl(parkingGateway);
     }
 
 }

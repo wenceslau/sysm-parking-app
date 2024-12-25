@@ -4,5 +4,5 @@ import java.time.LocalDateTime;
 
 public record ParkedResponse(
         String plate,
-        LocalDateTime checkInTime) {
+        LocalDateTime checkIn) {
 }

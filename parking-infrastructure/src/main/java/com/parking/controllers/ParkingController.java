@@ -1,6 +1,6 @@
 package com.parking.controllers;
 
-import com.parking.application.ParkingApp;
+import com.parking.application.ParkingAppImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -9,9 +9,9 @@ import static com.parking.controllers.records.Presentation.*;
 @RestController
 public class ParkingController implements ParkingAPI {
 
-    private final ParkingApp parkingApp;
+    private final ParkingAppImpl parkingApp;
 
-    public ParkingController(ParkingApp parkingApp) {
+    public ParkingController(ParkingAppImpl parkingApp) {
         this.parkingApp = parkingApp;
     }
 
