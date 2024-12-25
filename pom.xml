@@ -12,6 +12,7 @@
     <modules>
         <module>parking-domain</module>
         <module>parking-application</module>
+        <module>parking-infrastructure-jax-rs</module>
     </modules>
 
     <properties>

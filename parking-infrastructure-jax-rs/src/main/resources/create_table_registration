@@ -1,0 +1,10 @@
+create table registrations (
+    id varchar(255) not null,
+    amount float(53),
+    check_in timestamp(6),
+    check_out timestamp(6),
+    license_plate varchar(255),
+    rate float(53),
+    vehicle_type varchar(255),
+    primary key (id)
+)
