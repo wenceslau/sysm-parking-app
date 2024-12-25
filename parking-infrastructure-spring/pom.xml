@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.parking.infrastructure</groupId>
-    <artifactId>parking-infrastructure</artifactId>
+    <artifactId>parking-infrastructure-spring</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <parent>
