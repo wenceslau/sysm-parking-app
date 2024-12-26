@@ -56,4 +56,19 @@ public final class Presentation {
         return new ReportResponse(parkedVehicles, checkoutVehicles);
     }
 
+    public static List<RegistrationResponse> buildRegistrationsResponse(List<Registration> registrations) {
+        var response = new ArrayList<RegistrationResponse>();
+        for (Registration registration : registrations) {
+            var duration = registration.getDuration() != null ? registration.getDuration().toMinutes() : null;
+            var price = registration.getAmount();
+            response.add(new RegistrationResponse(
+                    registration.getVehicle().getLicensePlate(),
+                    registration.getVehicle().getClass().getSimpleName().toUpperCase(),
+                    registration.getCheckIn(),
+                    registration.getCheckOut(),
+                    duration,
+                    price));
+        }
+        return response;
+    }
 }

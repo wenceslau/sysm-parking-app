@@ -41,6 +41,12 @@
             <artifactId>quarkus-hibernate-orm-panache</artifactId>
         </dependency>
 
+        <!-- Cache -->
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-spring-cache</artifactId>
+        </dependency>
+
         <!-- JDBC Driver (e.g., H2, PostgreSQL, MySQL) -->
         <dependency>
             <groupId>io.quarkus</groupId>

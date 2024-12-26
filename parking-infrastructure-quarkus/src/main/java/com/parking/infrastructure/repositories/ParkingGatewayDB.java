@@ -11,6 +11,7 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -46,9 +47,24 @@ public class ParkingGatewayDB implements ParkingGateway {
 
     @Override
     public List<Registration> loadAllByCurrentDay() {
-        var currentDay = LocalDateTime.now().withHour(0).withMinute(0).withSecond(0).withNano(0);
+        var currentDay = LocalDateTime.now()
+                .withHour(0)
+                .withMinute(0)
+                .withSecond(0)
+                .withNano(0);
 
         return parkingRepository.findAllByCheckInGreaterThan(currentDay)
+                .stream()
+                .map(ParkingGatewayDB::toDomain)
+                .toList();
+    }
+
+    @Override
+    public List<Registration> findAllByCheckInDay(LocalDate localDate) {
+        var currentDay = localDate.atStartOfDay();
+        var nextDay = localDate.atTime(23, 59, 59);
+
+        return parkingRepository.findAllByCheckInBetween(currentDay, nextDay)
                 .stream()
                 .map(ParkingGatewayDB::toDomain)
                 .toList();

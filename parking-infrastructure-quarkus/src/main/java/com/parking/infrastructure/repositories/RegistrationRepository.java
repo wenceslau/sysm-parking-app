@@ -14,4 +14,8 @@ public class RegistrationRepository implements PanacheRepository<RegistrationEnt
         return list("checkIn >= ?1", checkIn);
     }
 
+    List<RegistrationEntity> findAllByCheckInBetween(LocalDateTime checkInStart, LocalDateTime checkInEnd) {
+        return list("checkIn >= ?1 and checkIn <= ?2", checkInStart, checkInEnd);
+    }
+
 }

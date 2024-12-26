@@ -6,6 +6,7 @@ import com.parking.application.ParkingAppImpl;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
 import jakarta.inject.Inject;
+import org.springframework.context.annotation.Bean;
 
 @ApplicationScoped
 public class ParkingProduced {
@@ -16,6 +17,11 @@ public class ParkingProduced {
     @Produces
     public ParkingApp parkingAppProducer() {
         return new ParkingAppImpl(parkingGateway);
+    }
+
+    @Bean
+    public ParkingGateway parkingGatewayProducer() {
+        return parkingGateway;
     }
 
 }
