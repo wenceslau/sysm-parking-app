@@ -60,4 +60,24 @@ public final class Builder {
                 .setCheckoutVehicles(checkoutVehicles);
     }
 
+    public static List<RegistrationDTO> buildRegistrationsDTO(List<Registration> registrations) {
+        var registrationDTOs = new ArrayList<RegistrationDTO>();
+
+        for (Registration registration : registrations) {
+
+            var duration = registration.getDuration() != null ? registration.getDuration().toMinutes() : null;
+            var registrationDTO = new RegistrationDTO()
+                    .setPlate(registration.getVehicle().getLicensePlate())
+                    .setVehicleType(registration.getVehicle().getClass().getSimpleName().toUpperCase())
+                    .setCheckIn(registration.getCheckIn())
+                    .setCheckOut(registration.getCheckOut())
+                    .setDuration(duration)
+                    .setPrice(registration.getAmount());
+            registrationDTOs.add(registrationDTO);
+        }
+
+        return registrationDTOs;
+    }
+
+
 }

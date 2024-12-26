@@ -1,11 +1,14 @@
 package com.parking.infrastructure.resources;
 
 import com.parking.application.ParkingApp;
+import com.parking.infrastructure.configuration.CacheConfig;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+
+import java.time.LocalDate;
 
 import static com.parking.infrastructure.resources.dto.Builder.*;
 
@@ -15,6 +18,9 @@ public class ParkingResource {
 
     @Inject
     private ParkingApp parkingApp;
+
+    @Inject
+    private CacheConfig cacheConfig;
 
     @POST
     @Path("/open/{capacity}")
@@ -36,6 +42,8 @@ public class ParkingResource {
     public Response register(@PathParam("licensePlate") String licensePlate, @PathParam("vehicleType") String vehicleType) {
 
         var registration = parkingApp.registerLicensePlate(licensePlate, vehicleType);
+        cacheConfig.removeCache("reportByDate", LocalDate.now());
+        System.out.println("Cache cleared");
 
         return Response
                 .ok()
@@ -56,4 +64,26 @@ public class ParkingResource {
                 .entity(buildReportDTO(vehiclesParked, checkoutLog))
                 .build();
     }
+
+    @GET
+    @Path("/report/{date}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response report(@PathParam("date") String date) {
+        LocalDate localDate = LocalDate.parse(date);
+
+        var cache = cacheConfig.getCache("reportByDate", date);
+        if (cache == null) {
+            System.out.println("Cache miss, fetching from database");
+            var registrations = parkingApp.findAllByCheckinDay(localDate);
+            cache = buildRegistrationsDTO(registrations);
+            cacheConfig.addCache("reportByDate", cache, date);
+        }
+
+        return Response
+                .ok()
+                .entity(cache)
+                .build();
+    }
+
+
 }

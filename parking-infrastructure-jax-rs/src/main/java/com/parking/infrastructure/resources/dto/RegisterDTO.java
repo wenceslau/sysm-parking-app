@@ -76,11 +76,11 @@ public class RegisterDTO {
         return this;
     }
 
-    public double getAmountToPay() {
+    public Double getAmountToPay() {
         return amountToPay;
     }
 
-    public RegisterDTO setAmountToPay(double amountToPay) {
+    public RegisterDTO setAmountToPay(Double amountToPay) {
         this.amountToPay = amountToPay;
         return this;
     }
