@@ -1,7 +1,10 @@
 package com.parking.infrastructure.controllers;
 
+import com.parking.infrastructure.controllers.records.RegisterRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
 
 @RequestMapping("parking")
 public interface ParkingAPI {
@@ -10,9 +13,12 @@ public interface ParkingAPI {
     ResponseEntity<?> open(@PathVariable int capacity);
 
     @PostMapping("/register/{licensePlate}/{vehicleType}")
-    ResponseEntity<?> register(@PathVariable String licensePlate, @PathVariable String vehicleType);
+    ResponseEntity<?> register(@RequestBody RegisterRequest registerRequest);
 
     @GetMapping("/report")
     ResponseEntity<?> report();
+
+    @GetMapping("/report/{date}")
+    ResponseEntity<?> report(@PathVariable LocalDate date);
 
 }
