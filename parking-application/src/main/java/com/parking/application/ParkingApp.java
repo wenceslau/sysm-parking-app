@@ -2,6 +2,7 @@ package com.parking.application;
 
 import com.parking.domain.Registration;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface ParkingApp {
@@ -9,6 +10,8 @@ public interface ParkingApp {
     void openParking(int capacity);
 
     Registration registerLicensePlate(String licensePlate, String vehicleType);
+
+    List<Registration> findAllByCheckinDay(LocalDate date);
 
     List<Registration> vehiclesParked();
 

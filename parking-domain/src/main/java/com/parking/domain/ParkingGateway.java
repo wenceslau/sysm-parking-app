@@ -1,5 +1,6 @@
 package com.parking.domain;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface ParkingGateway {
@@ -8,5 +9,8 @@ public interface ParkingGateway {
 
     double getRateByType(VehicleType vehicleType);
 
+    List<Registration> findAllByCheckInDay(LocalDate localDate);
+
     List<Registration> loadAllByCurrentDay();
+
 }

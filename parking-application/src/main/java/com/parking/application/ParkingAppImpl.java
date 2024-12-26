@@ -2,6 +2,7 @@ package com.parking.application;
 
 import com.parking.domain.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class ParkingAppImpl implements ParkingApp {
@@ -33,6 +34,10 @@ public class ParkingAppImpl implements ParkingApp {
         parkingGateway.save(vehicleRegistration);
 
         return vehicleRegistration;
+    }
+
+    public List<Registration> findAllByCheckinDay(LocalDate date) {
+        return parkingGateway.findAllByCheckInDay(date);
     }
 
     public List<Registration> vehiclesParked() {

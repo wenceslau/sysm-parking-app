@@ -55,7 +55,7 @@ public class Registration {
         return duration;
     }
 
-    public double getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
