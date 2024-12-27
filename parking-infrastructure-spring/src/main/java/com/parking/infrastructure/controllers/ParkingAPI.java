@@ -1,11 +1,15 @@
 package com.parking.infrastructure.controllers;
 
+import com.parking.infrastructure.controllers.records.AuthRequest;
 import com.parking.infrastructure.controllers.records.RegisterRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.Map;
 
 @RequestMapping("parking")
 public interface ParkingAPI {
@@ -21,5 +25,8 @@ public interface ParkingAPI {
 
     @GetMapping("/report/{date}")
     ResponseEntity<?> report(@PathVariable LocalDate date);
+
+    @PostMapping("/auth")
+    ResponseEntity<?> auth(@RequestBody AuthRequest authRequest);
 
 }

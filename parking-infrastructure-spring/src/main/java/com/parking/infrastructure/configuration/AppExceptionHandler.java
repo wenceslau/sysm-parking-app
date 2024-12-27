@@ -2,6 +2,7 @@ package com.parking.infrastructure.configuration;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,6 +28,13 @@ public class AppExceptionHandler {
     public ResponseEntity<?> handleException(Exception ex) {
         return ResponseEntity
                 .internalServerError()
+                .body(from(ex));
+    }
+
+    @ExceptionHandler(value = {AuthenticationException.class})
+    public ResponseEntity<?> handleAuthenticationException(RuntimeException ex) {
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
                 .body(from(ex));
     }
 

@@ -1,12 +1,15 @@
 package com.parking.infrastructure;
 
 import com.parking.infrastructure.repositories.RateRepository;
+import com.parking.infrastructure.repositories.UserRepository;
 import com.parking.infrastructure.repositories.entities.RateEntity;
+import com.parking.infrastructure.repositories.entities.UserEntity;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.UUID;
 
@@ -19,9 +22,12 @@ public class Main {
     }
 
     @Bean
-    public ApplicationRunner initRateEntity(RateRepository rateRepository) {
+    public ApplicationRunner initRateEntity(RateRepository rateRepository,
+                                            UserRepository userRepository,
+                                            PasswordEncoder passwordEncoder) {
         return args -> {
            rateRepository.deleteAll();
+           userRepository.deleteAll();
 
             var rate = new RateEntity().setId(UUID.randomUUID().toString())
                     .setVehicleType("CAR")
@@ -32,6 +38,12 @@ public class Main {
                     .setVehicleType("MOTORCYCLE")
                     .setRate(3.1);
             rateRepository.saveAndFlush(rate);
+
+            var admin = new UserEntity();
+            admin.setUsername("admin");
+            admin.setPassword(passwordEncoder.encode("12345678"));
+            admin.setRole("ADMIN");
+            userRepository.save(admin);
 
         };
     }
