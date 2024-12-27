@@ -2,9 +2,9 @@ package com.parking.domain;
 
 public abstract class Vehicle {
 
-    private final String licensePlate;
     private final double rate;
 
+    private String licensePlate;
     private double additionalHourValue = 6.0;
 
     public Vehicle(String licensePlate, double rate) {
@@ -49,6 +49,8 @@ public abstract class Vehicle {
         if (rate <= 0) {
             throw new IllegalArgumentException("Rate must be greater than zero");
         }
+        this.licensePlate = licensePlate.toUpperCase();
+
     }
 
 }
