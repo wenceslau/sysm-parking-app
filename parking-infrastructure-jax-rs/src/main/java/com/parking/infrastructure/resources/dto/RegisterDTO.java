@@ -1,35 +1,13 @@
 package com.parking.infrastructure.resources.dto;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
+import jakarta.validation.constraints.NotBlank;
 
 public class RegisterDTO {
-    private String type;
-    private String plate;
+    @NotBlank
     private String vehicleType;
-    private double rate;
-    private LocalDateTime checkIn;
-    private LocalDateTime checkOut;
-    private Duration duration;
-    private Double amountToPay;
 
-    public String getType() {
-        return type;
-    }
-
-    public RegisterDTO setType(String type) {
-        this.type = type;
-        return this;
-    }
-
-    public String getPlate() {
-        return plate;
-    }
-
-    public RegisterDTO setPlate(String plate) {
-        this.plate = plate;
-        return this;
-    }
+    @NotBlank
+    private String licensePlate;
 
     public String getVehicleType() {
         return vehicleType;
@@ -40,48 +18,12 @@ public class RegisterDTO {
         return this;
     }
 
-    public double getRate() {
-        return rate;
+    public String getLicensePlate() {
+        return licensePlate;
     }
 
-    public RegisterDTO setRate(double rate) {
-        this.rate = rate;
-        return this;
-    }
-
-    public LocalDateTime getCheckIn() {
-        return checkIn;
-    }
-
-    public RegisterDTO setCheckIn(LocalDateTime checkIn) {
-        this.checkIn = checkIn;
-        return this;
-    }
-
-    public LocalDateTime getCheckOut() {
-        return checkOut;
-    }
-
-    public RegisterDTO setCheckOut(LocalDateTime checkOut) {
-        this.checkOut = checkOut;
-        return this;
-    }
-
-    public Duration getDuration() {
-        return duration;
-    }
-
-    public RegisterDTO setDuration(Duration duration) {
-        this.duration = duration;
-        return this;
-    }
-
-    public Double getAmountToPay() {
-        return amountToPay;
-    }
-
-    public RegisterDTO setAmountToPay(Double amountToPay) {
-        this.amountToPay = amountToPay;
+    public RegisterDTO setLicensePlate(String licensePlate) {
+        this.licensePlate = licensePlate;
         return this;
     }
 }

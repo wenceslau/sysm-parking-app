@@ -1,6 +1,7 @@
 package com.parking.infrastructure.controllers;
 
 import com.parking.infrastructure.controllers.records.RegisterRequest;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,8 +13,8 @@ public interface ParkingAPI {
     @PostMapping("/open/{capacity}")
     ResponseEntity<?> open(@PathVariable int capacity);
 
-    @PostMapping("/register/{licensePlate}/{vehicleType}")
-    ResponseEntity<?> register(@RequestBody RegisterRequest registerRequest);
+    @PostMapping("/register")
+    ResponseEntity<?> register(@Valid @RequestBody RegisterRequest registerRequest);
 
     @GetMapping("/report")
     ResponseEntity<?> report();

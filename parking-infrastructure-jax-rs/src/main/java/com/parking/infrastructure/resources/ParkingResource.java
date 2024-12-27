@@ -2,8 +2,10 @@ package com.parking.infrastructure.resources;
 
 import com.parking.application.ParkingApp;
 import com.parking.infrastructure.configuration.CacheConfig;
+import com.parking.infrastructure.resources.dto.RegisterDTO;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -37,11 +39,15 @@ public class ParkingResource {
     }
 
     @POST
-    @Path("/register/{licensePlate}/{vehicleType}")
+    @Path("/register")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response register(@PathParam("licensePlate") String licensePlate, @PathParam("vehicleType") String vehicleType) {
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response register(@Valid RegisterDTO register) {
 
-        var registration = parkingApp.registerLicensePlate(licensePlate, vehicleType);
+        var registration = parkingApp.registerLicensePlate(
+                register.getLicensePlate(),
+                register.getVehicleType());
+
         cacheConfig.removeCache("reportByDate", LocalDate.now());
         System.out.println("Cache cleared");
 

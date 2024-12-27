@@ -15,7 +15,7 @@ public final class Builder {
                 .setCreatedAt(LocalDateTime.now());
     }
 
-    public static RegisterDTO buildRegisterDTO(Registration registration) {
+    public static RegisteredDTO buildRegisterDTO(Registration registration) {
 
         var type = "check-in";
         Duration duration = null;
@@ -25,7 +25,7 @@ public final class Builder {
         }
         String className = registration.getVehicle().getClass().getSimpleName().toUpperCase();
 
-        return new RegisterDTO()
+        return new RegisteredDTO()
                 .setType(type)
                 .setPlate(registration.getVehicle().getLicensePlate())
                 .setVehicleType(className)

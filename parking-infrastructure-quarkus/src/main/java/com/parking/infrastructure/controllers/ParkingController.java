@@ -1,7 +1,9 @@
 package com.parking.infrastructure.controllers;
 
+import com.parking.infrastructure.controllers.records.RegisterRequest;
 import com.parking.infrastructure.services.ParkingService;
 import jakarta.inject.Inject;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -30,11 +32,13 @@ public class ParkingController {
     }
 
     @POST
-    @Path("/register/{licensePlate}/{vehicleType}")
-    public Response register(@PathParam("licensePlate") String licensePlate,
-                             @PathParam("vehicleType") String vehicleType){
+    @Path("/register")
+    public Response register(@Valid RegisterRequest registerRequest){
 
-        var registration = parkingService.registerLicensePlate(licensePlate, vehicleType);
+        var registration = parkingService.registerLicensePlate(
+                registerRequest.licensePlate(),
+                registerRequest.vehicleType());
+
         parkingService.clearCacheByParameter(LocalDate.now());
 
         return Response
