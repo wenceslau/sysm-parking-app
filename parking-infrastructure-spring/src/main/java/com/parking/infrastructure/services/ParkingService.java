@@ -42,6 +42,10 @@ public class ParkingService {
 
     @CacheEvict(value = "findAllByCheckin", key = "#date")
     public void clearCacheByParameter(LocalDate date) {
+        /*
+            Methods with annotations @Cacheable and @CacheEvict
+            should be called from another class, otherwise they not work
+         */
         System.out.println("Cache cleared");
     }
 

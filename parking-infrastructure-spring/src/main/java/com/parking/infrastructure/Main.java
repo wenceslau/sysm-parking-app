@@ -1,5 +1,6 @@
 package com.parking.infrastructure;
 
+import com.parking.infrastructure.configuration.AppParkingConfig;
 import com.parking.infrastructure.repositories.RateRepository;
 import com.parking.infrastructure.repositories.UserRepository;
 import com.parking.infrastructure.repositories.entities.RateEntity;
@@ -13,12 +14,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.UUID;
 
-@EnableCaching
 @SpringBootApplication
 public class Main {
 
     public static void main(String[] args) {
-        SpringApplication.run(Main.class, args);
+        SpringApplication.run(AppParkingConfig.class, args);
     }
 
     @Bean

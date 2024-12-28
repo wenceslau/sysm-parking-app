@@ -15,6 +15,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 public class SecurityConfig {
 
+    private static final String[] AUTH_WHITELIST = {
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+            "/parking/auth"
+    };
+
     private final UserDetailsService userDetailsService;
     private final JwtTokenService jwtTokenService;
 
@@ -29,7 +35,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> {
                     authorize
-                            .requestMatchers("/parking/auth").permitAll()
+                            .requestMatchers(AUTH_WHITELIST).permitAll()
                             .anyRequest().authenticated();
                 })
                 .addFilterBefore(new JwtTokenFilter(jwtTokenService), UsernamePasswordAuthenticationFilter.class)
