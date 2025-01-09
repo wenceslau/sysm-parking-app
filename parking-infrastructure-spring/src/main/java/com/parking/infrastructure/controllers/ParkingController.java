@@ -75,9 +75,11 @@ public class ParkingController implements ParkingAPI {
     @Override
     public ResponseEntity<?> auth(AuthRequest authRequest) {
         // Authenticate the user
-        var authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(authRequest.username(), authRequest.password())
-        );
+
+        var userAuth = new UsernamePasswordAuthenticationToken(authRequest.username(), authRequest.password());
+
+        var authentication = authenticationManager.authenticate(userAuth);
+
         var token = jwtTokenService.generateToken(authentication.getName());
 
         return ResponseEntity
