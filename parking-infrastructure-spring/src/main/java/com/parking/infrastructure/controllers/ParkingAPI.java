@@ -9,10 +9,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.Map;
 
 @RequestMapping("parking")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 public interface ParkingAPI {
 
     @PostMapping("/open/{capacity}")

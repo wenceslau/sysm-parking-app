@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Configuration;
 
 import javax.crypto.SecretKey;
+import java.time.Instant;
 import java.util.Date;
 
 @Configuration
@@ -16,10 +17,13 @@ public class JwtTokenService {
     private static final SecretKey KEY = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
 
     public String generateToken(String username) {
+
+        var expirationDate = Date.from(Instant.now().plusSeconds(60 * 10));
+
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 86400000)) // 1 dia
+                .setExpiration(expirationDate)
                 .signWith(KEY, SignatureAlgorithm.HS256)
                 .compact();
     }

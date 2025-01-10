@@ -8,7 +8,6 @@ import com.parking.infrastructure.services.ParkingService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
