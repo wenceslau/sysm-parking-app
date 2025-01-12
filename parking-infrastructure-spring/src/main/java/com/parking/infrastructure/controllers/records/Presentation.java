@@ -1,6 +1,7 @@
 package com.parking.infrastructure.controllers.records;
 
 import com.parking.domain.Registration;
+import com.parking.domain.VehicleType;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -8,16 +9,20 @@ import java.util.List;
 
 public final class Presentation {
 
+    public static StatusResponse buildStatusResponse(boolean isOpen, int occupation) {
+        return new StatusResponse(isOpen , occupation);
+    }
+
     public static OpenResponse buildOpenResponse(int capacity) {
         return new OpenResponse(capacity, LocalDateTime.now());
     }
 
     public static RegisterResponse buildRegisterResponse(Registration registration) {
 
-        var type = "check-in";
+        var type = "checkIn";
         Long duration = null;
         if (registration.getCheckOut() != null) {
-            type = "check-out";
+            type = "checkOut";
             duration = registration.getDuration().toMinutes();
         }
         String className = registration.getVehicle().getClass().getSimpleName().toUpperCase();
@@ -39,6 +44,7 @@ public final class Presentation {
         for (Registration registration : vehiclesParked) {
             var parked = new ParkedResponse(
                     registration.getVehicle().getLicensePlate(),
+                    VehicleType.converter(registration.getVehicle().getClass().getSimpleName()),
                     registration.getCheckIn());
             parkedVehicles.add(parked);
         }

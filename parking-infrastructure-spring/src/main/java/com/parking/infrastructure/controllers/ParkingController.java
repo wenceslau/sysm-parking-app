@@ -26,6 +26,20 @@ public class ParkingController implements ParkingAPI {
         this.authenticationManager = authenticationManager;
     }
 
+
+    @Override
+    public ResponseEntity<?> status() {
+
+        boolean isOpen = parkingService.isOpen();
+        int occupation = parkingService.vehiclesParked().size();
+
+        var statusResponse = Presentation.buildStatusResponse(isOpen, occupation);
+
+        return ResponseEntity
+                .ok()
+                .body(statusResponse);
+    }
+
     @Override
     public ResponseEntity<?> open(int capacity) {
 

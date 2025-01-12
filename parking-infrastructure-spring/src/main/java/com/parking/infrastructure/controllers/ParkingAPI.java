@@ -13,6 +13,9 @@ import java.time.LocalDate;
 @RequestMapping("parking")
 public interface ParkingAPI {
 
+    @GetMapping("/status")
+    ResponseEntity<?> status();
+
     @PostMapping("/open/{capacity}")
     ResponseEntity<?> open(@PathVariable int capacity);
 

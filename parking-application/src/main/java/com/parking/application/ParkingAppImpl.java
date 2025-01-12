@@ -16,6 +16,10 @@ public class ParkingAppImpl implements ParkingApp {
         parking = new Parking(registrations);
     }
 
+    public boolean isOpen() {
+       return parking.isOpen();
+    }
+
     public void openParking(int capacity) {
         parking.openParking(capacity);
     }

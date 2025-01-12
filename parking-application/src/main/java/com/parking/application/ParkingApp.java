@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface ParkingApp {
 
+    boolean isOpen();
+
     void openParking(int capacity);
 
     Registration registerLicensePlate(String licensePlate, String vehicleType);

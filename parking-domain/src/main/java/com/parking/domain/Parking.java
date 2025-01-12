@@ -21,7 +21,7 @@ public class Parking {
 
     public void openParking(int capacity) {
 
-        if (isOpened()) {
+        if (isOpen()) {
             throw new IllegalStateException("Parking lot is already opened");
         }
 
@@ -34,7 +34,7 @@ public class Parking {
 
     public Registration registerPlate(Vehicle vehicle) {
 
-        if (!isOpened()) {
+        if (!isOpen()) {
             throw new IllegalStateException("Parking lot is closed");
         }
 
@@ -83,7 +83,7 @@ public class Parking {
         return capacity;
     }
 
-    public boolean isOpened() {
+    public boolean isOpen() {
         return capacity != null;
     }
 }
