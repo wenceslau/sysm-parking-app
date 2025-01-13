@@ -22,6 +22,10 @@ public class ParkingService {
        return parkingApp.isOpen();
     }
 
+    public int capacity() {
+        return parkingApp.capacity();
+    }
+
     public void openParking(int capacity) {
         parkingApp.openParking(capacity);
     }
@@ -52,5 +56,6 @@ public class ParkingService {
          */
         System.out.println("Cache cleared");
     }
+
 
 }

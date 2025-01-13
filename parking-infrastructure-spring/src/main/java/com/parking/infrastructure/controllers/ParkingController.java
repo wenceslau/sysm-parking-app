@@ -31,9 +31,13 @@ public class ParkingController implements ParkingAPI {
     public ResponseEntity<?> status() {
 
         boolean isOpen = parkingService.isOpen();
+        int capacity = 0;
+        if (isOpen){
+            capacity = parkingService.capacity();
+        }
         int occupation = parkingService.vehiclesParked().size();
 
-        var statusResponse = Presentation.buildStatusResponse(isOpen, occupation);
+        var statusResponse = Presentation.buildStatusResponse(isOpen, capacity, occupation);
 
         return ResponseEntity
                 .ok()

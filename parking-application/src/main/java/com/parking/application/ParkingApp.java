@@ -9,6 +9,8 @@ public interface ParkingApp {
 
     boolean isOpen();
 
+    int capacity();
+
     void openParking(int capacity);
 
     Registration registerLicensePlate(String licensePlate, String vehicleType);
@@ -18,4 +20,5 @@ public interface ParkingApp {
     List<Registration> vehiclesParked();
 
     List<Registration> checkoutLog();
+
 }

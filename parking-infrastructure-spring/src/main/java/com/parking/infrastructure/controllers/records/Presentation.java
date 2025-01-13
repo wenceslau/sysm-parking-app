@@ -9,8 +9,8 @@ import java.util.List;
 
 public final class Presentation {
 
-    public static StatusResponse buildStatusResponse(boolean isOpen, int occupation) {
-        return new StatusResponse(isOpen , occupation);
+    public static StatusResponse buildStatusResponse(boolean isOpen, int capacity, int occupation) {
+        return new StatusResponse(isOpen, capacity, occupation);
     }
 
     public static OpenResponse buildOpenResponse(int capacity) {
@@ -72,6 +72,7 @@ public final class Presentation {
                     registration.getCheckIn(),
                     registration.getCheckOut(),
                     registration.getDuration() != null ? registration.getDuration().toMinutes() : null,
+                    registration.getVehicle().getRate(),
                     registration.getAmount());
             registrationResponses.add(registrationResponse);
         }
