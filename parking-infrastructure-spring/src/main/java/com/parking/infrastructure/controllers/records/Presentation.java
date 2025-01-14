@@ -17,7 +17,8 @@ public final class Presentation {
         return new OpenResponse(capacity, LocalDateTime.now());
     }
 
-    public static RegisterResponse buildRegisterResponse(Registration registration) {
+    public static RegisterResponse buildRegisterResponse(Registration registration, List<Registration> vehiclesParked,
+                                                         List<Registration> checkoutLog) {
 
         var type = "checkIn";
         Long duration = null;
@@ -27,6 +28,9 @@ public final class Presentation {
         }
         String className = registration.getVehicle().getClass().getSimpleName().toUpperCase();
 
+        var checkInVehicles = buildCheckInResponse(vehiclesParked);
+        var checkOutVehicles = buildCheckOutResponse(checkoutLog);
+
         return new RegisterResponse(
                 type,
                 registration.getVehicle().getLicensePlate(),
@@ -35,31 +39,37 @@ public final class Presentation {
                 registration.getCheckIn(),
                 registration.getCheckOut(),
                 duration,
-                registration.getAmount());
+                registration.getAmount(),
+                checkInVehicles,
+                checkOutVehicles);
     }
 
-    public static ReportResponse buildReportResponse(List<Registration> vehiclesParked, List<Registration> checkoutReport) {
+    public static List<CheckInResponse> buildCheckInResponse(List<Registration> vehiclesParked) {
+        var checkInResponses = new ArrayList<CheckInResponse>();
 
-        var parkedVehicles = new ArrayList<ParkedResponse>();
         for (Registration registration : vehiclesParked) {
-            var parked = new ParkedResponse(
+            var checkInResponse = new CheckInResponse(
                     registration.getVehicle().getLicensePlate(),
                     VehicleType.converter(registration.getVehicle().getClass().getSimpleName()),
                     registration.getCheckIn());
-            parkedVehicles.add(parked);
+            checkInResponses.add(checkInResponse);
         }
 
-        var checkoutVehicles = new ArrayList<CheckOutResponse>();
-        for (Registration registration : checkoutReport) {
-            var checkout = new CheckOutResponse(
+        return checkInResponses;
+    }
+
+    public static List<CheckOutResponse> buildCheckOutResponse(List<Registration> checkoutLog) {
+        var checkOutResponses = new ArrayList<CheckOutResponse>();
+
+        for (Registration registration : checkoutLog) {
+            var checkOutResponse = new CheckOutResponse(
                     registration.getVehicle().getLicensePlate(),
                     registration.getDuration().toMinutes(),
                     registration.getAmount());
-            checkoutVehicles.add(checkout);
+            checkOutResponses.add(checkOutResponse);
         }
 
-
-        return new ReportResponse(parkedVehicles, checkoutVehicles);
+        return checkOutResponses;
     }
 
     public static List<RegistrationResponse> buildRegistrationsResponse(List<Registration> registrations) {

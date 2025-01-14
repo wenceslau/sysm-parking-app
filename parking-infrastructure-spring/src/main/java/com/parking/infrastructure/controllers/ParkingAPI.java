@@ -22,8 +22,11 @@ public interface ParkingAPI {
     @PostMapping("/register")
     ResponseEntity<?> register(@Valid @RequestBody RegisterRequest registerRequest);
 
-    @GetMapping("/report")
-    ResponseEntity<?> report();
+    @GetMapping("/checkInReport")
+    ResponseEntity<?> checkInReport();
+
+    @GetMapping("/checkOutReport")
+    ResponseEntity<?> checkOutReport();
 
     @GetMapping("/report/{date}")
     ResponseEntity<?> report(@PathVariable LocalDate date);

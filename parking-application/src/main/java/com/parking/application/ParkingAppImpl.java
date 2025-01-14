@@ -22,10 +22,6 @@ public class ParkingAppImpl implements ParkingApp {
 
     @Override
     public int capacity() {
-        Integer capacity = parking.getCapacity();
-        if (capacity == null) {
-            throw new IllegalStateException("Parking lot is closed");
-        }
         return parking.getCapacity();
     }
 

@@ -4,7 +4,7 @@ import com.parking.domain.VehicleType;
 
 import java.time.LocalDateTime;
 
-public record ParkedResponse(
+public record CheckInResponse(
         String plate,
         VehicleType vehicleType,
         LocalDateTime checkIn) {

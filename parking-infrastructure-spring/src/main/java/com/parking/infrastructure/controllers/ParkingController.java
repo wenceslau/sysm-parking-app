@@ -26,7 +26,6 @@ public class ParkingController implements ParkingAPI {
         this.authenticationManager = authenticationManager;
     }
 
-
     @Override
     public ResponseEntity<?> status() {
 
@@ -62,21 +61,32 @@ public class ParkingController implements ParkingAPI {
                 registerRequest.vehicleType());
 
         parkingService.clearCacheByParameter(LocalDate.now());
-
-        return ResponseEntity
-                .ok()
-                .body(Presentation.buildRegisterResponse(registration));
-    }
-
-    @Override
-    public ResponseEntity<?> report() {
-
         var vehiclesParked = parkingService.vehiclesParked();
         var checkoutLog = parkingService.checkoutLog();
 
         return ResponseEntity
                 .ok()
-                .body(Presentation.buildReportResponse(vehiclesParked, checkoutLog));
+                .body(Presentation.buildRegisterResponse(registration, vehiclesParked, checkoutLog));
+    }
+
+    @Override
+    public ResponseEntity<?> checkInReport() {
+
+        var vehiclesParked = parkingService.vehiclesParked();
+
+        return ResponseEntity
+                .ok()
+                .body(Presentation.buildCheckInResponse(vehiclesParked));
+    }
+
+    @Override
+    public ResponseEntity<?> checkOutReport() {
+
+        var checkoutLog = parkingService.checkoutLog();
+
+        return ResponseEntity
+                .ok()
+                .body(Presentation.buildCheckOutResponse(checkoutLog));
     }
 
     @Override
