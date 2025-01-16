@@ -1,0 +1,3 @@
+Install ng translate
+  npm install @ngx-translate/core --save --force
+  npm install @ngx-translate/http-loader --save --force
