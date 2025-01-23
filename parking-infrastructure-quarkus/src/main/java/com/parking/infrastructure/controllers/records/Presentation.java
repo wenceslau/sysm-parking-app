@@ -20,7 +20,7 @@ public final class Presentation {
             type = "check-out";
             duration = registration.getDuration().toMinutes();
         }
-        String className = registration.getVehicle().getClass().getSimpleName().toUpperCase();
+        String className = registration.getVehicle().getType().name();
 
         return new RegisterResponse(
                 type,
@@ -63,7 +63,7 @@ public final class Presentation {
             var price = registration.getAmount();
             response.add(new RegistrationResponse(
                     registration.getVehicle().getLicensePlate(),
-                    registration.getVehicle().getClass().getSimpleName().toUpperCase(),
+                    registration.getVehicle().getType().name(),
                     registration.getCheckIn(),
                     registration.getCheckOut(),
                     duration,

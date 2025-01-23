@@ -23,12 +23,12 @@ public final class Builder {
             type = "check-out";
             duration = Duration.between(registration.getCheckIn(), registration.getCheckOut());
         }
-        String className = registration.getVehicle().getClass().getSimpleName().toUpperCase();
+        var vehicleType = registration.getVehicle().getType();
 
         return new RegisteredDTO()
                 .setType(type)
                 .setPlate(registration.getVehicle().getLicensePlate())
-                .setVehicleType(className)
+                .setVehicleType(vehicleType.name())
                 .setRate(registration.getVehicle().getRate())
                 .setCheckIn(registration.getCheckIn())
                 .setCheckOut(registration.getCheckOut())
@@ -68,7 +68,7 @@ public final class Builder {
             var duration = registration.getDuration() != null ? registration.getDuration().toMinutes() : null;
             var registrationDTO = new RegistrationDTO()
                     .setPlate(registration.getVehicle().getLicensePlate())
-                    .setVehicleType(registration.getVehicle().getClass().getSimpleName().toUpperCase())
+                    .setVehicleType(registration.getVehicle().getType().name())
                     .setCheckIn(registration.getCheckIn())
                     .setCheckOut(registration.getCheckOut())
                     .setDuration(duration)

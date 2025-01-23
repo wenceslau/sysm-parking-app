@@ -26,7 +26,7 @@ public final class Presentation {
             type = "checkOut";
             duration = registration.getDuration().toMinutes();
         }
-        String className = registration.getVehicle().getClass().getSimpleName().toUpperCase();
+        String className = registration.getVehicle().getType().name();
 
         var checkInVehicles = buildCheckInResponse(vehiclesParked);
         var checkOutVehicles = buildCheckOutResponse(checkoutLog);
@@ -50,7 +50,7 @@ public final class Presentation {
         for (Registration registration : vehiclesParked) {
             var checkInResponse = new CheckInResponse(
                     registration.getVehicle().getLicensePlate(),
-                    VehicleType.converter(registration.getVehicle().getClass().getSimpleName()),
+                    VehicleType.converter(registration.getVehicle().getType().name()),
                     registration.getCheckIn());
             checkInResponses.add(checkInResponse);
         }
@@ -78,7 +78,7 @@ public final class Presentation {
         for (Registration registration : registrations) {
             var registrationResponse = new RegistrationResponse(
                     registration.getVehicle().getLicensePlate(),
-                    registration.getVehicle().getClass().getSimpleName().toUpperCase(),
+                    registration.getVehicle().getType().name(),
                     registration.getCheckIn(),
                     registration.getCheckOut(),
                     registration.getDuration() != null ? registration.getDuration().toMinutes() : null,

@@ -112,7 +112,7 @@ public class ParkingGatewayDB implements ParkingGateway {
         var statement = connection.prepareStatement(sql);
 
         statement.setString(1, registration.getId());
-        statement.setString(2, registration.getVehicle().getClass().getSimpleName().toUpperCase());
+        statement.setString(2, registration.getVehicle().getType().name());
         statement.setString(3, registration.getVehicle().getLicensePlate());
         statement.setTimestamp(4, java.sql.Timestamp.valueOf(registration.getCheckIn()));
         statement.setDouble(5, registration.getVehicle().getRate());

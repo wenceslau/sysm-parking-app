@@ -74,7 +74,7 @@ public class ParkingGatewayDB implements ParkingGateway {
         return new RegistrationEntity()
                 .setId(registration.getId())
                 .setLicensePlate(registration.getVehicle().getLicensePlate())
-                .setVehicleType(registration.getVehicle().getClass().getSimpleName().toUpperCase())
+                .setVehicleType(registration.getVehicle().getType().name())
                 .setRate(registration.getVehicle().getRate())
                 .setCheckIn(registration.getCheckIn())
                 .setCheckOut(registration.getCheckOut())
