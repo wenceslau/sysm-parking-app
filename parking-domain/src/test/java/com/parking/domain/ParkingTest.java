@@ -3,6 +3,7 @@ package com.parking.domain;
 import com.parking.domain.vehicles.Car;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -124,9 +125,11 @@ class ParkingTest {
         Vehicle vehicle1 = new Car("ABC-1234", 5.5);
         Registration registration1 = new Registration(vehicle1, LocalDateTime.now().minusHours(2));
         existingRegistrations.add(registration1);
+        String id = "123";
+        LocalDate referenceDate = LocalDate.now();
 
         // Act
-        Parking parking = new Parking(existingRegistrations);
+        Parking parking = new Parking(id, referenceDate, existingRegistrations);
 
         // Assert
         assertEquals(1, parking.getRegistrations().size());
@@ -140,9 +143,11 @@ class ParkingTest {
         Vehicle vehicle1 = new Car("ABC-1234", 5.5);
         Registration registration1 = new Registration(vehicle1, LocalDateTime.now().minusHours(2));
         originalRegistrations.add(registration1);
+        String id = "123";
+        LocalDate referenceDate = LocalDate.now();
 
         // Act
-        Parking parking = new Parking(originalRegistrations);
+        Parking parking = new Parking(id, referenceDate, originalRegistrations);
         parking.getRegistrations().add(new Registration(new Car("DEF-5678", 6.0), LocalDateTime.now()));
 
         // Assert

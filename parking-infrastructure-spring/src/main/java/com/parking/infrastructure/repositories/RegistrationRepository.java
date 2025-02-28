@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface RegistrationRepository extends JpaRepository<RegistrationEntity, String> {
 
+    List<RegistrationEntity> findAllByParkingId(String id);
+
     List<RegistrationEntity> findAllByCheckInGreaterThan(LocalDateTime checkIn);
 
     @Query("SELECT r FROM Registration r WHERE r.checkIn BETWEEN :start AND :end")

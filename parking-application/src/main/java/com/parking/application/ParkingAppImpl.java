@@ -7,17 +7,15 @@ import java.util.List;
 
 public class ParkingAppImpl implements ParkingApp {
 
-    private final Parking parking;
     private final ParkingGateway parkingGateway;
+    private Parking parking;
 
     public ParkingAppImpl(ParkingGateway parkingGateway) {
         this.parkingGateway = parkingGateway;
-        var registrations = parkingGateway.loadAllByCurrentDay();
-        parking = new Parking(registrations);
     }
 
     public boolean isOpen() {
-       return parking.isOpen();
+       return parking != null && parking.isOpen();
     }
 
     @Override
@@ -26,6 +24,10 @@ public class ParkingAppImpl implements ParkingApp {
     }
 
     public void openParking(int capacity) {
+        if (parking == null) {
+            var optional = parkingGateway.findParkingByCurrentDay();
+            parking = optional.orElseGet(Parking::new);
+        }
         parking.openParking(capacity);
     }
 

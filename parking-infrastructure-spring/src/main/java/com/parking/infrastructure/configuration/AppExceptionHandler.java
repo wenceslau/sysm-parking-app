@@ -53,7 +53,7 @@ public class AppExceptionHandler {
 
     record ApiError(String message) {
         public static Object from(Exception ex) {
-            System.err.println(ex);
+            ex.printStackTrace();
             return new ApiError(ex.getMessage());
         }
     }

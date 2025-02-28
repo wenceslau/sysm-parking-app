@@ -1,5 +1,6 @@
 package com.parking.infrastructure.repositories;
 
+import com.parking.domain.Parking;
 import com.parking.domain.ParkingGateway;
 import com.parking.domain.Registration;
 import com.parking.domain.VehicleType;
@@ -14,6 +15,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @ApplicationScoped
 public class ParkingGatewayDB implements ParkingGateway {
@@ -45,7 +47,6 @@ public class ParkingGatewayDB implements ParkingGateway {
                 .orElseThrow(() -> new EntityNotFoundException("Rate not found for vehicle type: " + vehicleType));
     }
 
-    @Override
     public List<Registration> loadAllByCurrentDay() {
         var currentDay = LocalDateTime.now()
                 .withHour(0)
@@ -68,6 +69,11 @@ public class ParkingGatewayDB implements ParkingGateway {
                 .stream()
                 .map(ParkingGatewayDB::toDomain)
                 .toList();
+    }
+
+    @Override
+    public Optional<Parking> findParkingByCurrentDay() {
+        return Optional.empty();
     }
 
     private static RegistrationEntity toEntity(Registration registration) {

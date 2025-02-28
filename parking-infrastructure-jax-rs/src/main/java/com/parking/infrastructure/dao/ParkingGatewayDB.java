@@ -1,5 +1,6 @@
 package com.parking.infrastructure.dao;
 
+import com.parking.domain.Parking;
 import com.parking.domain.ParkingGateway;
 import com.parking.domain.Registration;
 import com.parking.domain.VehicleType;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @ApplicationScoped
 public class ParkingGatewayDB implements ParkingGateway {
@@ -82,6 +84,10 @@ public class ParkingGatewayDB implements ParkingGateway {
     }
 
     @Override
+    public Optional<Parking> findParkingByCurrentDay() {
+        return Optional.empty();
+    }
+
     public List<Registration> loadAllByCurrentDay() {
         var list = new ArrayList<Registration>();
         try {

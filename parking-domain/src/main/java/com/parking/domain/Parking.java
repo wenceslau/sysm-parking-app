@@ -1,21 +1,29 @@
 package com.parking.domain;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public class Parking {
 
+    private final String id;
+    private final LocalDate referenceDate;
     private final List<Registration> registrations;
 
     private Integer capacity;
 
     public Parking() {
+        this.referenceDate = LocalDate.now();
+        this.id = UUID.nameUUIDFromBytes(referenceDate.toString().getBytes()).toString();
         this.registrations = new ArrayList<>();
     }
 
-    public Parking(List<Registration> registrations) {
+    public Parking(String id, LocalDate referenceDate, List<Registration> registrations) {
+        this.id = id;
+        this.referenceDate = referenceDate;
         this.registrations = new ArrayList<>(registrations);
     }
 
@@ -73,6 +81,14 @@ public class Parking {
     private Registration checkOutVehicle(Registration registration) {
         registration.checkOut(LocalDateTime.now());
         return registration;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public LocalDate getReferenceDate() {
+        return referenceDate;
     }
 
     public List<Registration> getRegistrations() {

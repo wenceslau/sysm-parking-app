@@ -2,6 +2,7 @@ package com.parking.domain;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public interface ParkingGateway {
 
@@ -11,6 +12,5 @@ public interface ParkingGateway {
 
     List<Registration> findAllByCheckInDay(LocalDate localDate);
 
-    List<Registration> loadAllByCurrentDay();
-
+    Optional<Parking> findParkingByCurrentDay();
 }

@@ -1,9 +1,6 @@
 package com.parking.infrastructure.repositories.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
@@ -31,6 +28,10 @@ public class RegistrationEntity {
 
     @Column(name = "amount")
     private Double amount;
+
+    @ManyToOne
+    @JoinColumn(name = "parking_id")
+    private ParkingEntity parking;
 
     public String getId() {
         return id;
@@ -92,6 +93,15 @@ public class RegistrationEntity {
 
     public RegistrationEntity setAmount(Double amount) {
         this.amount = amount;
+        return this;
+    }
+
+    public ParkingEntity getParking() {
+        return parking;
+    }
+
+    public RegistrationEntity setParking(ParkingEntity parking) {
+        this.parking = parking;
         return this;
     }
 }

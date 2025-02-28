@@ -31,10 +31,11 @@ public class ParkingController implements ParkingAPI {
 
         boolean isOpen = parkingService.isOpen();
         int capacity = 0;
+        int occupation = 0;
         if (isOpen){
             capacity = parkingService.capacity();
+            occupation = parkingService.vehiclesParked().size();
         }
-        int occupation = parkingService.vehiclesParked().size();
 
         var statusResponse = Presentation.buildStatusResponse(isOpen, capacity, occupation);
 

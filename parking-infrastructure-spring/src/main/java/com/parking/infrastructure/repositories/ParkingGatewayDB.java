@@ -1,8 +1,10 @@
 package com.parking.infrastructure.repositories;
 
+import com.parking.domain.Parking;
 import com.parking.domain.ParkingGateway;
 import com.parking.domain.Registration;
 import com.parking.domain.VehicleType;
+import com.parking.infrastructure.repositories.entities.ParkingEntity;
 import com.parking.infrastructure.repositories.entities.RateEntity;
 import com.parking.infrastructure.repositories.entities.RegistrationEntity;
 import jakarta.persistence.EntityNotFoundException;
@@ -12,21 +14,26 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ParkingGatewayDB implements ParkingGateway {
 
     private final RateRepository rateRepository;
-    private final RegistrationRepository parkingRepository;
+    private final RegistrationRepository registrationRepository;
+    private final ParkingRepository parkingRepository;
 
-    public ParkingGatewayDB(RateRepository rateRepository, RegistrationRepository parkingRepository) {
+    public ParkingGatewayDB(RateRepository rateRepository,
+                            RegistrationRepository registrationRepository,
+                            ParkingRepository parkingRepository) {
         this.rateRepository = rateRepository;
+        this.registrationRepository = registrationRepository;
         this.parkingRepository = parkingRepository;
     }
 
     @Override
     public void save(Registration registration) {
-        parkingRepository.save(toEntity(registration));
+        registrationRepository.save(toEntity(registration));
     }
 
     @Override
@@ -37,18 +44,29 @@ public class ParkingGatewayDB implements ParkingGateway {
                 .orElseThrow(()-> new EntityNotFoundException("Rate not found for vehicle type: " + vehicleType));
     }
 
-    @Override
-    public List<Registration> loadAllByCurrentDay() {
-        var currentDay = LocalDateTime.now()
-                .withHour(0)
-                .withMinute(0)
-                .withSecond(0)
-                .withNano(0);
+   // @Override
+//    public List<Registration> loadAllByCurrentDay() {
+//        var currentDay = LocalDateTime.now()
+//                .withHour(0)
+//                .withMinute(0)
+//                .withSecond(0)
+//                .withNano(0);
+//
+//        return registrationRepository.findAllByCheckInGreaterThan(currentDay)
+//                .stream()
+//                .map(ParkingGatewayDB::toDomain)
+//                .toList();
+//    }
 
-        return parkingRepository.findAllByCheckInGreaterThan(currentDay)
-                .stream()
-                .map(ParkingGatewayDB::toDomain)
-                .toList();
+    @Override
+    public Optional<Parking> findParkingByCurrentDay() {
+        var parking = parkingRepository.findByReferenceDate(LocalDate.now());
+        if (parking.isPresent()) {
+            var registrations = registrationRepository.findAllByParkingId(parking.get().getId());
+            return Optional.of(toDomain(parking.get(), registrations));
+        } else {
+            return Optional.empty();
+        }
     }
 
     @Override
@@ -57,7 +75,7 @@ public class ParkingGatewayDB implements ParkingGateway {
         var start = localDate.atStartOfDay();
         var end = localDate.atTime(23, 59, 59);
 
-        return parkingRepository.findAllByCheckInBetween(start, end)
+        return registrationRepository.findAllByCheckInBetween(start, end)
                 .stream()
                 .map(ParkingGatewayDB::toDomain)
                 .toList();
@@ -88,5 +106,12 @@ public class ParkingGatewayDB implements ParkingGateway {
                 registrationEntity.getCheckOut(),
                 duration,
                 registrationEntity.getAmount());
+    }
+
+    private static Parking toDomain(ParkingEntity parkingEntity, List<RegistrationEntity> registrationEntities) {
+        var registrations = registrationEntities.stream()
+                .map(ParkingGatewayDB::toDomain)
+                .toList();
+        return new Parking(parkingEntity.getId(), parkingEntity.getReferenceDate(), registrations);
     }
 }
