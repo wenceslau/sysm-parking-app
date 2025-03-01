@@ -10,13 +10,13 @@ import jakarta.persistence.Table;
 public class RateEntity {
 
     @Id
-    public String id;
+    private String id;
 
     @Column(name = "vehicle_type")
-    public String vehicleType;
+    private String vehicleType;
 
     @Column(name = "rate")
-    public Double rate;
+    private Double rate;
 
     public String getId() {
         return id;

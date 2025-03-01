@@ -1,6 +1,7 @@
 package com.parking.infrastructure.controllers.records;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public record RegisterResponse(
         String type,
@@ -10,5 +11,8 @@ public record RegisterResponse(
         LocalDateTime checkIn,
         LocalDateTime checkOut,
         Long duration,
-        Double amountToPay) {
+        Double amountToPay,
+        List<CheckInResponse> parkedVehicles,
+        List<CheckOutResponse> checkoutVehicles) {
 }
+

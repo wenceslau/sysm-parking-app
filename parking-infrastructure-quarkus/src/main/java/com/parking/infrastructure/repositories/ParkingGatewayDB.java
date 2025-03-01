@@ -4,6 +4,7 @@ import com.parking.domain.Parking;
 import com.parking.domain.ParkingGateway;
 import com.parking.domain.Registration;
 import com.parking.domain.VehicleType;
+import com.parking.infrastructure.repositories.entities.ParkingEntity;
 import com.parking.infrastructure.repositories.entities.RegistrationEntity;
 import com.parking.infrastructure.repositories.entities.RateEntity;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -21,12 +22,14 @@ import java.util.Optional;
 public class ParkingGatewayDB implements ParkingGateway {
 
     private final RateRepository rateRepository;
-    private final RegistrationRepository parkingRepository;
+    private final RegistrationRepository registrationRepository;
+    private final ParkingRepository parkingRepository;
 
     @Inject
-    public ParkingGatewayDB(RateRepository rateRepository, RegistrationRepository parkingRepository) {
+    public ParkingGatewayDB(RateRepository rateRepository, RegistrationRepository parkingRepository, ParkingRepository parkingRepository1) {
         this.rateRepository = rateRepository;
-        this.parkingRepository = parkingRepository;
+        this.registrationRepository = parkingRepository;
+        this.parkingRepository = parkingRepository1;
     }
 
     @Override
@@ -34,9 +37,9 @@ public class ParkingGatewayDB implements ParkingGateway {
     public void save(Registration registration) {
         var entity = toEntity(registration);
         if (registration.getCheckOut() != null) {
-            entity = parkingRepository.getEntityManager().merge(entity);
+            entity = registrationRepository.getEntityManager().merge(entity);
         }
-        parkingRepository.persist(entity);
+        registrationRepository.persist(entity);
     }
 
     @Override
@@ -54,7 +57,7 @@ public class ParkingGatewayDB implements ParkingGateway {
                 .withSecond(0)
                 .withNano(0);
 
-        return parkingRepository.findAllByCheckInGreaterThan(currentDay)
+        return registrationRepository.findAllByCheckInGreaterThan(currentDay)
                 .stream()
                 .map(ParkingGatewayDB::toDomain)
                 .toList();
@@ -65,7 +68,7 @@ public class ParkingGatewayDB implements ParkingGateway {
         var currentDay = localDate.atStartOfDay();
         var nextDay = localDate.atTime(23, 59, 59);
 
-        return parkingRepository.findAllByCheckInBetween(currentDay, nextDay)
+        return registrationRepository.findAllByCheckInBetween(currentDay, nextDay)
                 .stream()
                 .map(ParkingGatewayDB::toDomain)
                 .toList();
@@ -73,7 +76,13 @@ public class ParkingGatewayDB implements ParkingGateway {
 
     @Override
     public Optional<Parking> findParkingByCurrentDay() {
-        return Optional.empty();
+        var parking = parkingRepository.findByReferenceDate(LocalDate.now());
+        if (parking.isPresent()) {
+            var registrations = registrationRepository.findAllByParkingId(parking.get().getId());
+            return Optional.of(toDomain(parking.get(), registrations));
+        } else {
+            return Optional.empty();
+        }
     }
 
     private static RegistrationEntity toEntity(Registration registration) {
@@ -101,5 +110,12 @@ public class ParkingGatewayDB implements ParkingGateway {
                 registrationEntity.getCheckOut(),
                 duration,
                 registrationEntity.getAmount());
+    }
+
+    private static Parking toDomain(ParkingEntity parkingEntity, List<RegistrationEntity> registrationEntities) {
+        var registrations = registrationEntities.stream()
+                .map(ParkingGatewayDB::toDomain)
+                .toList();
+        return new Parking(parkingEntity.getId(), parkingEntity.getReferenceDate(), registrations);
     }
 }

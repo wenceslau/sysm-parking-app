@@ -10,6 +10,11 @@ import java.util.List;
 @ApplicationScoped
 public class RegistrationRepository implements PanacheRepository<RegistrationEntity> {
 
+    List<RegistrationEntity> findAllByParkingId(String id){
+        return list("parkingId", id);
+    }
+
+
     List<RegistrationEntity> findAllByCheckInGreaterThan(LocalDateTime checkIn) {
         return list("checkIn >= ?1", checkIn);
     }

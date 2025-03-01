@@ -19,6 +19,14 @@ public class ParkingService {
         this.parkingApp = parkingApp;
     }
 
+    public boolean isOpen() {
+        return parkingApp.isOpen();
+    }
+
+    public int capacity() {
+        return parkingApp.capacity();
+    }
+
     public void openParking(int capacity) {
         parkingApp.openParking(capacity);
     }

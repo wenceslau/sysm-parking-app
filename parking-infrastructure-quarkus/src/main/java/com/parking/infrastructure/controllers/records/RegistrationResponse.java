@@ -8,5 +8,7 @@ public record RegistrationResponse(
         LocalDateTime checkIn,
         LocalDateTime checkOut,
         Long duration,
-        Double price) {
+        Double rate,
+        Double amount) {
 }
+
