@@ -1,6 +1,6 @@
 package com.parking.infrastructure.controllers;
 
-import com.parking.infrastructure.configuration.security.JwtTokenService;
+import com.parking.infrastructure.configuration.security.JWTokenService;
 import com.parking.infrastructure.controllers.records.AuthRequest;
 import com.parking.infrastructure.controllers.records.Presentation;
 import com.parking.infrastructure.controllers.records.RegisterRequest;
@@ -17,12 +17,12 @@ import java.util.Map;
 public class ParkingController implements ParkingAPI {
 
     private final ParkingService parkingService;
-    private final JwtTokenService jwtTokenService;
+    private final JWTokenService JWTokenService;
     private final AuthenticationManager authenticationManager;
 
-    public ParkingController(ParkingService parkingService, JwtTokenService jwtTokenService, AuthenticationManager authenticationManager) {
+    public ParkingController(ParkingService parkingService, JWTokenService JWTokenService, AuthenticationManager authenticationManager) {
         this.parkingService = parkingService;
-        this.jwtTokenService = jwtTokenService;
+        this.JWTokenService = JWTokenService;
         this.authenticationManager = authenticationManager;
     }
 
@@ -108,7 +108,7 @@ public class ParkingController implements ParkingAPI {
 
         var authentication = authenticationManager.authenticate(userAuth);
 
-        var token = jwtTokenService.generateToken(authentication.getName());
+        var token = JWTokenService.generateToken(authentication.getName());
 
         return ResponseEntity
                 .status(200)

@@ -11,7 +11,7 @@ import java.time.Instant;
 import java.util.Date;
 
 @Configuration
-public class JwtTokenService {
+public class JWTokenService {
 
     private static final String SECRET_KEY = "9A4nXhs3QjVEFCgHFZ+hT+icaBkLJJ4mcxhPhX/trbo=";
     private static final SecretKey KEY = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());

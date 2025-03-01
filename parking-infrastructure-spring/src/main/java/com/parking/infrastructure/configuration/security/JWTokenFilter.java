@@ -13,22 +13,22 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-public class JwtTokenFilter extends OncePerRequestFilter {
+public class JWTokenFilter extends OncePerRequestFilter {
 
-    private final JwtTokenService jwtTokenService;
+    private final JWTokenService JWTokenService;
 
-    public JwtTokenFilter(JwtTokenService jwtTokenService) {
-        this.jwtTokenService = jwtTokenService;
+    public JWTokenFilter(JWTokenService JWTokenService) {
+        this.JWTokenService = JWTokenService;
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
-        String token = jwtTokenService.getTokenFromRequest(request);
+        String token = JWTokenService.getTokenFromRequest(request);
 
-        if (token != null && jwtTokenService.isTokenValid(token)) {
-            String username = jwtTokenService.getUsernameFromToken(token);
+        if (token != null && JWTokenService.isTokenValid(token)) {
+            String username = JWTokenService.getUsernameFromToken(token);
 
             // Configura o contexto de autenticação
             UserDetails userDetails = User.withUsername(username).password("").authorities("USER").build();

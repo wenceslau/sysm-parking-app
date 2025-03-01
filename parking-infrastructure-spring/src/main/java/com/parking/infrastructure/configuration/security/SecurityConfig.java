@@ -27,11 +27,11 @@ public class SecurityConfig {
     };
 
     private final UserDetailsService userDetailsService;
-    private final JwtTokenService jwtTokenService;
+    private final JWTokenService JWTokenService;
 
-    public SecurityConfig(UserDetailsService userDetailsService, JwtTokenService jwtTokenService) {
+    public SecurityConfig(UserDetailsService userDetailsService, JWTokenService JWTokenService) {
         this.userDetailsService = userDetailsService;
-        this.jwtTokenService = jwtTokenService;
+        this.JWTokenService = JWTokenService;
     }
 
     @Bean
@@ -44,7 +44,7 @@ public class SecurityConfig {
                             .requestMatchers(AUTH_WHITELIST).permitAll()
                             .anyRequest().authenticated();
                 })
-                .addFilterBefore(new JwtTokenFilter(jwtTokenService), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JWTokenFilter(JWTokenService), UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
