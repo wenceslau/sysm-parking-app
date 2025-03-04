@@ -32,6 +32,9 @@ public class ParkingAppImpl implements ParkingApp {
     }
 
     public Registration registerLicensePlate(String licensePlate, String vehicleType) {
+        if (parking == null) {
+            throw new IllegalStateException("Parking is not initialized");
+        }
 
         // Convert the string to the VehicleType enum
         var vehicleTypeEnum = VehicleType.converter(vehicleType);
@@ -52,12 +55,18 @@ public class ParkingAppImpl implements ParkingApp {
     }
 
     public List<Registration> vehiclesParked() {
+        if (parking == null) {
+            throw new IllegalStateException("Parking is not initialized");
+        }
         return parking.getRegistrations().stream()
                 .filter(r -> r.getCheckOut() == null)
                 .toList();
     }
 
     public List<Registration> checkoutLog() {
+        if (parking == null) {
+            throw new IllegalStateException("Parking is not initialized");
+        }
         return parking.getRegistrations().stream()
                 .filter(r -> r.getCheckOut() != null)
                 .toList();

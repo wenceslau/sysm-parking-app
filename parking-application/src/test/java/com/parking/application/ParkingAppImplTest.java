@@ -1,5 +1,6 @@
 package com.parking.application;
 
+import com.parking.domain.Parking;
 import com.parking.domain.ParkingGateway;
 import com.parking.domain.Registration;
 import com.parking.domain.VehicleType;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -105,6 +107,7 @@ class ParkingAppImplTest {
         ParkingGateway mockParkingGateway = mock(ParkingGateway.class);
         when(mockParkingGateway.loadAllByCurrentDay()).thenReturn(Collections.emptyList());
         ParkingAppImpl parkingApp = new ParkingAppImpl(mockParkingGateway);
+        parkingApp.openParking(10);
         String licensePlate = "ABC-1234";
         String invalidVehicleType = "InvalidType";
 
@@ -139,8 +142,11 @@ class ParkingAppImplTest {
                 new Registration(vehicle, LocalDateTime.now()),
                 new Registration(vehicle3, LocalDateTime.now())
         );
-        when(mockParkingGateway.loadAllByCurrentDay()).thenReturn(allRegistrations);
+        Parking parking = new Parking("123", LocalDate.now(), allRegistrations);
+        when(mockParkingGateway.findParkingByCurrentDay()).thenReturn(Optional.of(parking));
+
         ParkingAppImpl parkingApp = new ParkingAppImpl(mockParkingGateway);
+        parkingApp.openParking(10);
 
         // Act
         List<Registration> parkedVehicles = parkingApp.vehiclesParked();
@@ -162,7 +168,7 @@ class ParkingAppImplTest {
         );
         when(mockParkingGateway.loadAllByCurrentDay()).thenReturn(mockRegistrations);
         ParkingAppImpl parkingApp = new ParkingAppImpl(mockParkingGateway);
-
+        parkingApp.openParking(10);
         // Act
         List<Registration> checkoutLog = parkingApp.checkoutLog();
 

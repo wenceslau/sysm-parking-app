@@ -10,6 +10,8 @@ public interface ParkingGateway {
 
     double getRateByType(VehicleType vehicleType);
 
+    List<Registration> loadAllByCurrentDay();
+
     List<Registration> findAllByCheckInDay(LocalDate localDate);
 
     Optional<Parking> findParkingByCurrentDay();

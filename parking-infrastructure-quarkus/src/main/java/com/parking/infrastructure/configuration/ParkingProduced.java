@@ -19,9 +19,4 @@ public class ParkingProduced {
         return new ParkingAppImpl(parkingGateway);
     }
 
-    @Bean
-    public ParkingGateway parkingGatewayProducer() {
-        return parkingGateway;
-    }
-
 }
